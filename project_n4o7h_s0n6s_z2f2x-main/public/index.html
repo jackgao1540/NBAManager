@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- This meta tag ensures that the website renders correctly across different device sizes, enhancing mobile responsiveness. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Link to the external CSS stylesheet. Uncomment if you wish to customize or add styling. -->
+    <!-- <link rel="stylesheet" href="styles.css">   -->
+
+    <title>Database Application</title>
+</head>
+<body>
+    <!-- ===================================================================================== -->
+    <!-- Display the current status of the database connection. 
+         !!HERE TO HELP U DEBUGGING, NOT REQUIRED IN YOUR OWN PROJECT!!
+         -->
+    <h1>Database Connection Status: 
+        <span id="dbStatus"> </span>
+        <img id="loadingGif" class="loading-gif" src="loading_100px.gif" alt="Loading...">
+    </h1>
+    
+    <div style="display: flex; flex-direction: column; gap: 20%; margin-top: 20px;">
+            <div style="display: flex; flex-direction: row; gap: 32px; min-width: 500px; margin-bottom: 32px;">
+
+            <select id="tableSelect" style="max-width: 10%;">
+                <option value="Teams">Teams</option>
+                <option value="Managers">Managers</option>
+                <option value="CheersFor">Cheerleaders</option>
+                <option value="Supports">Fans</option>
+                <option value="PlaysFor">Players</option>
+                <option value="StarPlayer">Star Players</option>
+                <option value="Stadium">Stadium</option>
+                <option value="Company">Company</option>
+                <option value="Endorses">Companies</option>
+                <option value="Sponsor">Stadium Sponsors</option>
+                <option value="Coaches">Coaches</option>
+                <option value="Coached">Coaching History</option>
+                <option value="Reporters">Reporters</option>
+                <option value="Hosts">Games</option>
+            </select>
+
+            <select id="fieldsSelect" style="min-width: 150px;" multiple>
+                <option value="Name">Name</option>
+                <option value="WinLossRatio">WinLossRatio</option>
+                <option value="Location">Location</option>
+                <option value="Championships">Championships</option>
+                <option value="CourtID">CourtID</option>
+            </select>
+            <button type="submit" id="selectButton">Show Table</button> <br>
+        </div>
+
+
+        <table id="selectedTable">
+            <thead >
+                
+            </thead>
+            <tbody style="align-items: left;">
+              
+            </tbody>
+        </table>
+    </div>
+
+    <br><hr><br> <!-- Hashim Code ========================================================================= -->
+
+    <div style="display: flex; flex-direction: row; gap: 20%;">
+
+    <div>
+    <h2>Insert Team Member</h2>
+
+    <form id="teamForm">
+        <label for="firstName">First Name (Required):</label>
+        <input type="text" id="firstName" placeholder="Enter First Name" required> <br><br>
+
+        <label for="lastName">Last Name (Required):</label>
+        <input type="text" id="lastName" placeholder="Enter Last Name" required> <br><br>
+
+        <label for="teamName">Team Name:</label>
+        <select id="teamName" name="teamName" required>
+            <option value="new">Add New Team</option>
+        </select><br><br>
+
+        
+        <div id="newTeamContainer">
+            <label for="newTeamName">New Team Name:</label>
+            <input type="text" id="newTeamName" placeholder="Enter New Team Name" required> <br><br>
+        </div>
+            
+        <label for="salary">Salary:</label>
+        <input type="number" id="salary" placeholder="Enter Salary"s> <br><br>
+
+        <label for="NickName">NickName:</label>
+        <input id="NickName" placeholder="Enter NickName"s> <br><br>
+
+        
+        <button type="submit" id="insertButton">Insert</button> <br>
+    <div id="insertResultMsg"></div>
+    </form> 
+    </div>
+
+    <div style="margin-top: 20px; flex-direction: column; display: flex; gap: 5%;">
+
+        <label for="teamName">Find the highest paid player on team below:</label>
+        <select id="hpTeam" name="teamName" required>
+        </select><br><br>
+
+        <button id="hpButton" type="button" id="Find Player">Find Player</button>
+    
+        <table id="hpTable" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Player Information</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin-top: 20px; flex-direction: column; display: flex;">
+
+        <label for="avgTeam">Find the average salary per team below:</label>
+        </select><br><br>
+
+        <button id="avgButton" type="button" id="Find Teams" style="margin-bottom: 16px;">Find Teams</button>
+    
+        <table id="avgTable" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Average Salary Per Team</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <br><hr><br>
+
+
+    <div style="display: flex; flex-direction: row;">
+
+    <div style="display: flex; flex-direction: column; gap: 12px; min-width: 100px; margin-bottom: 32px; margin-right:50px;">
+        <select id="DeleteF" style="max-width: 100%;">
+        </select>
+    
+        <select id="DeleteL" style="min-width: 150px;" multiple required>
+        </select>
+        <button type="submit" id="deleteB">Delete Player</button> <br>
+
+    <div id="deleteMessage"></div>
+    </div>
+    
+
+
+    <div id="filterSection">
+        <form id="filterForm">
+            <div id="filterConditions">
+                <div class="condition">
+                    <select  style="margin-top:16px; margin-right:16px;" name="columnName">
+                        <option value="CompanyName">Company Name</option>
+                        <option value="FirstName">First Name</option>
+                        <option value="LastName">Last Name</option>
+                        <option value="TeamName">Team Name</option>
+                        <option value="YearlyDeal">Yearly Deal</option>
+                    </select>
+                    <input type="text" name="value" placeholder="Value">
+                </div>
+            </div>
+            <button style="margin-top:16px; margin-right:16px;" id='addCond' type="button">Add Condition</button>
+            <button style="margin-top:16px; margin-right:16px;" id='endorsesS' >Apply Filters</button>
+            <button style="margin-top: 10px;" id='endorsesR' >Reset Filters</button>
+        </form>
+        <div id="queryResults" style="margin-top: 20px; min-width: 300px" >
+            <table id="resultsTable">
+                <thead>
+                    <tr>
+                        <th style="padding-right: 50px;">Company Name</th>
+                        <th style="padding-right: 50px;">First Name</th>
+                        <th style="padding-right: 50px;">Last Name</th>
+                        <th style="padding-right: 50px;">Team Name</th>
+                        <th style="padding-right: 50px;">Yearly Deal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+   </div>
+
+
+    <br><hr><br> <!-- Hashim Code ========================================================================= -->
+
+
+    
+
+    <!-- JACK'S CODE **************************************************************************************************************************************************************************************************-->
+    <div style="display: flex; flex-direction: row;">
+        <div style="display: flex; flex-direction: column; margin-right: 32px;">
+
+        <h2>Show PlaysFor</h2>
+        <table id="playsfor" border="1">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Nickname</th>
+                    <th>Team</th>
+                    <th>Salary (millions/year)</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+        <div style="margin-top: 52px; margin-bottom: 32px; display: flex; flex-direction: column; min-width: 300px">
+
+        
+        <form id="updatePlayerForm">
+            First Name: <input style="margin-top: 10px; margin-bottom: 10px;" type="text" id="oldFirstName" required><br>
+            Last Name: <input style="margin-top: 10px; margin-bottom: 10px;" type="text" id="oldLastName" required><br>
+            Team Name: <input style="margin-top: 10px; margin-bottom: 10px;" type="text" id="oldTeamName" required><br>
+            New Nickname: <input style="margin-top: 10px; margin-bottom: 10px;" type="text" id="newNickName" maxlength="50"><br>
+            New Salary: <input style="margin-top: 10px; margin-bottom: 10px;" type="number" id="newSalary"><br>
+            New Team Name: <input style="margin-top: 10px; margin-bottom: 10px;" type="text" id="newTeamName"><br>
+            <button style="margin-top: 10px; margin-bottom: 10px;" type="button" onclick="updatePlayerInfo()">Update Player</button>
+        </form>
+
+        </div>
+
+        <div style="display: flex; flex-direction: column; margin-right: 64px; margin-top: 42px;">
+            <h2>Teams with >= 2 Star Players</h2>
+            <ul id="teamsWithMultipleStarPlayersList">
+            </ul>
+            <button onclick="fetchAndDisplayTeamsWithMultipleStarPlayers()">Show Teams with >= 2 Star Players</button>
+    
+        </div>
+        <div style="display: flex; flex-direction: column; margin-right: 40px; margin-top: 42px;">
+        
+        <h2>Fans Supporting All Teams</h2>
+        <ul id="fansSupportingAllTeamsList">
+        </ul>
+        <button onclick="fetchAndDisplayFansSupportingAllTeams()">Show Fans Supporting All Teams</button>
+
+        <form id="fetchGamesForm">
+            Enter Date: <input type="date" id="gameDate">
+            <button type="button" onclick="fetchGames()">Show Games</button>
+        </form>
+        <div id="gamesList">
+        </div>
+    </div>
+    </div>
+    <br/><br/><br/><br/>
+
+
+
+    <!-- JACK'S CODE ******************************************************************************************************************************************************************************-->
+
+
+
+    <script src="scripts.js"></script>
+</body>
+</html>
